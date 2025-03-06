@@ -4,6 +4,12 @@ var Score = {
     losses: 0,
     ties:  0
 };
+function updateScoreUI(){
+    $(".you").text(Score.wins);
+    $(".comp").text(Score.losses);
+    $(".ties").text(Score.ties);
+}
+updateScoreUI();
 $("#rock").on("click", function(){
     ComputerMovefunc();
     playGame("rock");
@@ -25,11 +31,10 @@ $(".reset").on("click", function(){
     Score.wins = 0;
     Score.losses = 0;
     Score.ties = 0;
-    $(".you").text(Score.wins);
-    $(".comp").text(Score.losses);
-    $(".ties").text(Score.ties);
+    updateScoreUI();
     $(".status").text("Scores reset! Choose your move.");
-})
+    localStorage.setItem('Score',JSON.stringify(Score));
+});
 var ComputerMove = "";
 function ComputerMovefunc(){
     var randomNum = Math.floor(Math.random()*3);
@@ -100,6 +105,7 @@ function playGame(playerMove){
         $(".ties").text(Score.ties);
         $(".status").text("Tie!");
     }
+    localStorage.setItem('Score',JSON.stringify(Score));
 
 
 }
